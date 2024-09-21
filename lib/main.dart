@@ -6,6 +6,7 @@ import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/HomeScreen/home_screen.dart';
 import 'package:movie_app/Search%20Tab/search_tab.dart';
 import 'package:movie_app/Splash%20Screen/splash_screen.dart';
+import 'package:movie_app/Themes/my_theme.dart';
 import 'package:movie_app/WatchList%20Tab/watchList_tab.dart';
 
 void main() {
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
+            theme: MyTheme.theme,
             debugShowCheckedModeBanner: false,
             initialRoute: HomeScreen.routeName,
             routes: {

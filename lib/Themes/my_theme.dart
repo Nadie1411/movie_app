@@ -23,7 +23,7 @@ class MyTheme {
     bodyMedium: GoogleFonts.inter(
       color: AppColors.whiteColor,
       fontWeight: FontWeight.w400,
-      fontSize: 13,
+      fontSize: 15,
     ),
     bodySmall: GoogleFonts.inter(
       color: AppColors.whiteColor,
