@@ -32,11 +32,7 @@ class Recommended extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: MovieItemWithDetails(
-                      onTap: () {
-                        MovieDetailsTab();
-                      },
-                    ),
+                    child: MovieItemWithDetails(),
                   );
                 },
               ),

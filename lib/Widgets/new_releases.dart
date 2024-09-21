@@ -32,9 +32,10 @@ class NewReleases extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: MovieItem(
+                    child: InkWell(
+                      child: MovieItem(),
                       onTap: () {
-                        MovieDetailsTab();
+                        Navigator.pushNamed(context, MovieDetailsTab.routeName);
                       },
                     ),
                   );

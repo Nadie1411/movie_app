@@ -3,8 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MovieItem extends StatefulWidget {
   bool isWishListed = false;
-  final VoidCallback onTap;
-  MovieItem({required this.onTap});
+
   @override
   State<MovieItem> createState() => _MovieItemState();
 }
