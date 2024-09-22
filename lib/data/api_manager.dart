@@ -1,8 +1,10 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
+import 'package:http/http.dart' as http;
 import 'package:movie_app/data/end_points.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
+
+import 'model/Response/MovieDetailResponse.dart';
 
 class ApiManager {
   static const String baseUrl = 'api.themoviedb.org';
@@ -48,6 +50,36 @@ class ApiManager {
       var bodyString = response.body;
       var json = jsonDecode(bodyString);
       return MovieResponse.fromJson(json);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  static Future<MovieResponse> getSimilarMovies(int id, String page) async {
+    Uri url = Uri.https(baseUrl, EndPoints.getDetails(id),
+        {"api_key": EndPoints.apiKey, "language": "en-US", "page": page});
+    print(url);
+    try {
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return MovieResponse.fromJson(json);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  static Future<MovieDetailResponse> getMovieDetails(int id) async {
+    Uri url = Uri.https(baseUrl, EndPoints.getDetails(id),
+        {"api_key": EndPoints.apiKey, "language": "en-US"});
+    print(url);
+    try {
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return MovieDetailResponse.fromJson(json);
     } catch (e) {
       print(e);
       throw e;

@@ -55,4 +55,22 @@ class MoviesCubit extends Cubit<MoviesStates> {
       emit(PopularErrorState(errorMessage: e.toString()));
     }
   }
+
+  List<Movie>? similarMovies;
+
+  void getSimilar(int id) async {
+    print("Fetching Top Rated Movies");
+    try {
+      var response = await ApiManager.getSimilarMovies(id, '1');
+      if (response.success == 'false') {
+        emit(SimilarMovieErrorState(errorMessage: response.statusMessage!));
+      } else {
+        similarMovies = response.results ?? [];
+
+        emit(SimilarMovieSuccessState(response: response));
+      }
+    } catch (e) {
+      emit(SimilarMovieErrorState(errorMessage: e.toString()));
+    }
+  }
 }

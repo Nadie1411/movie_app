@@ -1,5 +1,4 @@
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
-import 'package:movie_app/data/model/failures.dart';
 
 abstract class MoviesStates {}
 
@@ -41,7 +40,20 @@ class TopRatedErrorState extends MoviesStates {
   TopRatedErrorState({required this.errorMessage});
 }
 
+class SimilarMovieErrorState extends MoviesStates {
+  String errorMessage;
+
+  SimilarMovieErrorState({required this.errorMessage});
+}
+
 class TopRatedSuccessState extends MoviesStates {
   MovieResponse response;
+
   TopRatedSuccessState({required this.response});
+}
+
+class SimilarMovieSuccessState extends MoviesStates {
+  MovieResponse response;
+
+  SimilarMovieSuccessState({required this.response});
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/Themes/app_colors.dart';
-import 'package:movie_app/Widgets/movie_item.dart';
 import 'package:movie_app/data/end_points.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
@@ -22,7 +21,8 @@ class _MovieItemWithDetailsState extends State<MovieItemWithDetails> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, MovieDetailsTab.routeName);
+        Navigator.pushNamed(context, MovieDetailsTab.routeName,
+            arguments: widget.movie);
       },
       child: Container(
         color: AppColors.movieGreyColor,

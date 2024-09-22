@@ -4,7 +4,6 @@ import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
 import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/Themes/app_colors.dart';
 import 'package:movie_app/Widgets/movie_item.dart';
-import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
 class NewReleases extends StatelessWidget {
   const NewReleases({
@@ -44,7 +43,9 @@ class NewReleases extends StatelessWidget {
                     child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
-                              context, MovieDetailsTab.routeName);
+                            context,
+                            MovieDetailsTab.routeName,
+                          );
                         },
                         child: MovieItem(
                           movie: cubit.upComingMovies![index],
