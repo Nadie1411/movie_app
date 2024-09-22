@@ -1,322 +1,191 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
+import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
+import 'package:movie_app/HomeScreen/Movie%20Details/similar_items.dart';
 import 'package:movie_app/Themes/app_colors.dart';
+import 'package:movie_app/data/end_points.dart';
+import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
-class MovieDetailsTab extends StatefulWidget {
+class MovieDetailsTab extends StatelessWidget {
   static const String routeName = 'movie_details';
 
   @override
-  _MovieDetailsTabState createState() => _MovieDetailsTabState();
-}
-
-class _MovieDetailsTabState extends State<MovieDetailsTab> {
-  String movieTitle = "Dora and the Lost City of Gold";
-  String posterAsset = "assets/images/Image.png";
-  double rating = 6.1;
-  String releaseDate = "2019";
-  String duration = "1h 42m";
-  String description =
-      "Teenage explorer Dora leads her friends on an adventure to save her parents and solve the mystery behind a lost city of gold.";
-
-  List<String> genres = ["Dark Comedy", "Superhero", "Action"];
-
-  final List<Map<String, dynamic>> moreLikeThis = [
-    {
-      "title": "Avengers: Infinity War",
-      "poster": "assets/images/movieposter/avengers.jpg",
-      "rating": 8.4,
-      "releaseDate": "2018",
-      "duration": "2h 29m",
-      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
-    },
-    {
-      "title": "Black Panther",
-      "poster": "assets/images/movieposter/black_panther.jpg",
-      "rating": 7.3,
-      "releaseDate": "2018",
-      "duration": "2h 15m",
-      "description": "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people."
-    },
-    {
-      "title": "Avengers: Infinity War",
-      "poster": "assets/images/movieposter/avengers.jpg",
-      "rating": 8.4,
-      "releaseDate": "2018",
-      "duration": "2h 29m",
-      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
-    },
-    {
-      "title": "Avengers: Infinity War",
-      "poster": "assets/images/movieposter/avengers.jpg",
-      "rating": 8.4,
-      "releaseDate": "2018",
-      "duration": "2h 29m",
-      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
-    },
-    {
-      "title": "Avengers: Infinity War",
-      "poster": "assets/images/movieposter/avengers.jpg",
-      "rating": 8.4,
-      "releaseDate": "2018",
-      "duration": "2h 29m",
-      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
-    },
-    {
-      "title": "Avengers: Infinity War",
-      "poster": "assets/images/movieposter/avengers.jpg",
-      "rating": 8.4,
-      "releaseDate": "2018",
-      "duration": "2h 29m",
-      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
-    },
-    {
-      "title": "Deadpool & Wolverine",
-      "poster": "assets/images/movieposter/wolverine.jpg",
-      "rating": 8,
-      "releaseDate": "2024",
-      "duration": "2h 8m",
-      "description": "Deadpool is offered a place in the Marvel Cinematic Universe by the Time Variance Authority, but instead recruits a variant of Wolverine to save his universe from extinction."
-    },
-    {
-      "title": "Dora and the Lost City of Gold",
-      "poster": "assets/images/Image.png",
-      "rating": 6.1,
-      "releaseDate": "2019",
-      "duration": "1h 42m",
-      "description": "Teenage explorer Dora leads her friends on an adventure to save her parents and solve the mystery behind a lost city of gold."
-    },
-  ];
-
-  void _updateMovieDetails(Map<String, dynamic> movie) {
-    setState(() {
-      movieTitle = movie["title"];
-      posterAsset = movie["poster"];
-      rating = movie["rating"];
-      releaseDate = movie["releaseDate"];
-      duration = movie["duration"];
-      description = movie["description"];
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        title: Text(
-          movieTitle,
-          style: TextStyle(
-            color: AppColors.whiteColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
+    var args = ModalRoute.of(context)?.settings.arguments! as Movie;
+    MoviesCubit cubit = MoviesCubit();
+
+    return BlocBuilder<MoviesCubit, MoviesStates>(
+      bloc: cubit..getSimilar(args.id ?? 0),
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: AppColors.backgroundColor,
+          appBar: AppBar(
+            title: Text(
+              args.title ?? '',
+              style: TextStyle(
+                color: AppColors.whiteColor,
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
+            ),
+            backgroundColor: AppColors.barGreyColor,
           ),
-        ),
-        backgroundColor: AppColors.barGreyColor,
-        iconTheme: IconThemeData(color: AppColors.primaryYellowColor),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(
-                    posterAsset,
-                    width: double.maxFinite,
-                    height: 220,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        height: 220,
-                        color: Colors.grey,
-                        child: Icon(
-                          Icons.broken_image,
-                          color: AppColors.sectionGreyColor,
-                          size: 50,
-                        ),
-                      );
-                    },
-                  ),
-                  Positioned.fill(
-                    child: Center(
-                      child: IconButton(
-                        onPressed: () {
-                          _showTrailerDialog(context);
+                  Stack(
+                    children: [
+                      Image.network(
+                        '${EndPoints.baseImageUrl}${args.posterPath}',
+                        width: double.maxFinite,
+                        height: 300,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 300,
+                            color: Colors.grey,
+                            child: Icon(
+                              Icons.broken_image,
+                              color: AppColors.sectionGreyColor,
+                              size: 50,
+                            ),
+                          );
                         },
-                        icon: Icon(
-                          Icons.play_circle_outline,
+                      ),
+                      Center(
+                        child: IconButton(
+                          onPressed: () {
+                            _showTrailerDialog(context);
+                          },
+                          icon: Icon(
+                            Icons.play_circle_outline,
+                            color: AppColors.whiteColor,
+                            size: 100,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    args.title ?? '',
+                    style: TextStyle(
+                      color: AppColors.whiteColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        args.releaseDate ?? '',
+                        style: TextStyle(
+                          color: AppColors.sectionGreyColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        args.voteAverage.toString(),
+                        style: TextStyle(
+                          color: AppColors.sectionGreyColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Icon(Icons.star, color: AppColors.primaryYellowColor),
+                      Text(
+                        args.voteAverage.toString(),
+                        style: TextStyle(
                           color: AppColors.whiteColor,
-                          size: 80,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Text(
-                movieTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: AppColors.whiteColor),
-              ),
-              SizedBox(height: 8),
-              Row(
-                children: [
+                  SizedBox(height: 12),
                   Text(
-                    releaseDate,
+                    args.overview ?? ' ',
                     style: TextStyle(
-                      color: AppColors.sectionGreyColor,
-                      fontSize: 14,
+                      color: AppColors.whiteColor,
+                      fontSize: 16,
+                      height: 1.5,
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(height: 12),
                   Text(
-                    duration,
-                    style: TextStyle(
-                      color: AppColors.sectionGreyColor,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Row(
-                children: genres.map((genre) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        _showGenreDialog(context, genre);
-                      },
-                      child: Chip(
-                        label: Text(
-                          genre,
-                          style: TextStyle(color: AppColors.whiteColor),
-                        ),
-                        backgroundColor: AppColors.barGreyColor,
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(height: 8),
-              Row(
-                children: [
-                  Icon(Icons.star, color: AppColors.primaryYellowColor),
-                  SizedBox(width: 5),
-                  Text(
-                    "$rating",
+                    "More Like This",
                     style: TextStyle(
                       color: AppColors.whiteColor,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(height: 8),
+                  // Ensure the Container is now wrapped properly in a Column
+                  Container(
+                    height: 200,
+                    child: state is SimilarMovieSuccessState
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.response.results?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SimilarItem(
+                                        movie: cubit.similarMovies![index]),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      args.title ?? '',
+                                      style: TextStyle(
+                                        color: AppColors.whiteColor,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.star,
+                                            color: AppColors.primaryYellowColor,
+                                            size: 14),
+                                        Text(
+                                          args.voteAverage.toString(),
+                                          style: TextStyle(
+                                            color: AppColors.whiteColor,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryYellowColor,
+                            ),
+                          ),
+                  ),
                 ],
               ),
-              SizedBox(height: 12),
-              Text(
-                description,
-                style: TextStyle(
-                  color: AppColors.whiteColor,
-                  fontSize: 16,
-                  height: 1.5,
-                ),
-              ),
-              SizedBox(height: 12),
-              Text(
-                "More Like This",
-                style: TextStyle(
-                  color: AppColors.whiteColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8),
-              SizedBox(
-                height: 180,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: moreLikeThis.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        _updateMovieDetails(moreLikeThis[index]);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 4,
-                                    offset: Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  moreLikeThis[index]["poster"],
-                                  width: 100,
-                                  height: 140,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      width: 100,
-                                      height: 140,
-                                      color: Colors.grey,
-                                      child: Icon(
-                                        Icons.broken_image,
-                                        color: AppColors.sectionGreyColor,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              moreLikeThis[index]["title"],
-                              style: TextStyle(
-                                color: AppColors.whiteColor,
-                                fontSize: 12,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.star,
-                                    color: AppColors.primaryYellowColor,
-                                    size: 14),
-                                SizedBox(width: 5),
-                                Text(
-                                  "${moreLikeThis[index]["rating"]}",
-                                  style: TextStyle(
-                                    color: AppColors.whiteColor,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -344,7 +213,8 @@ class _MovieDetailsTabState extends State<MovieDetailsTab> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Close', style: TextStyle(color: AppColors.whiteColor)),
+              child:
+                  Text('Close', style: TextStyle(color: AppColors.whiteColor)),
             ),
           ],
         );
@@ -353,23 +223,26 @@ class _MovieDetailsTabState extends State<MovieDetailsTab> {
   }
 
   void _showGenreDialog(BuildContext context, String genre) {
+    var args = ModalRoute.of(context)?.settings.arguments! as Movie;
+
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           backgroundColor: AppColors.barGreyColor,
           title: Text(
-            'Genre: $genre',
+            'Genre: ${args.genreIds}',
             style: TextStyle(color: AppColors.whiteColor),
           ),
           content: Text(
-            'Movies in $genre genre coming soon!',
+            'Movies in ${args.genreIds} genre coming soon!',
             style: TextStyle(color: AppColors.whiteColor),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Close', style: TextStyle(color: AppColors.whiteColor)),
+              child:
+                  Text('Close', style: TextStyle(color: AppColors.whiteColor)),
             ),
           ],
         );

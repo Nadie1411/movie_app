@@ -3,16 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/data/end_points.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
-class MovieItem extends StatefulWidget {
+class SliderImage extends StatefulWidget {
   bool isWishListed = false;
   Movie movie;
-  MovieItem({required this.movie});
+  SliderImage({required this.movie});
 
   @override
-  State<MovieItem> createState() => _MovieItemState();
+  State<SliderImage> createState() => _SliderImageState();
 }
 
-class _MovieItemState extends State<MovieItem> {
+class _SliderImageState extends State<SliderImage> {
   bool isWishlisted = false;
 
   @override
@@ -20,8 +20,8 @@ class _MovieItemState extends State<MovieItem> {
     return Stack(
       children: [
         Container(
-          width: 96.87.w,
-          height: 127.74.h,
+          width: 155.w,
+          height: 225.h,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
