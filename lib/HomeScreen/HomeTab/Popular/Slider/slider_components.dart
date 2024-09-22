@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/Widgets/movie_item.dart';
+import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
 class SliderComponents extends StatelessWidget {
+  Movie movie;
+  static const String baseImageUrl = "https://image.tmdb.org/t/p/w500";
+  SliderComponents({required this.movie});
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -19,12 +23,12 @@ class SliderComponents extends StatelessWidget {
                 Container(
                   width: 412.w,
                   height: 217.h,
-                  child: Image.asset('assets/images/Image (1).png'),
+                  child: Image.network('$baseImageUrl/${movie.posterPath}'),
                 ),
                 Positioned(
                   top: 100.h,
                   left: 150.w,
-                  child: Image.asset('assets/images/play-button-2.png'),
+                  child: Image.network('$baseImageUrl/${movie.posterPath}'),
                 ),
                 Positioned(
                   top: 118.h,
@@ -33,7 +37,9 @@ class SliderComponents extends StatelessWidget {
                     height: 199.h,
                     width: 129.w,
                     child: InkWell(
-                      child: MovieItem(),
+                      child: MovieItem(
+                        movie: movie,
+                      ),
                       onTap: () {
                         MovieDetailsTab();
                       },
@@ -46,11 +52,11 @@ class SliderComponents extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Title',
+                        movie.title ?? '',
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       Text(
-                        '2019',
+                        movie.releaseDate ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       )
                     ],

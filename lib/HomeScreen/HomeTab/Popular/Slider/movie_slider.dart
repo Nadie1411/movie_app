@@ -1,40 +1,26 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/HomeScreen/HomeTab/Popular/Slider/slider_components.dart';
+import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
-class MovieSlider extends StatefulWidget {
-  @override
-  _MovieSliderState createState() => _MovieSliderState();
-}
+class MovieSlider extends StatelessWidget {
+  int currentIndex = 0;
+  final List<Movie> movie;
 
-class _MovieSliderState extends State<MovieSlider> {
-  int _currentIndex = 0;
-
-  final List<SliderComponents> slider = [
-    SliderComponents(),
-    SliderComponents(),
-    SliderComponents(),
-    SliderComponents(),
-    SliderComponents(),
-  ];
+  MovieSlider({required this.movie});
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider.builder(
-      itemCount: 5,
-      itemBuilder: (context, index, realIdx) {
-        return slider[index];
-      },
-      options: CarouselOptions(
-        autoPlay: true,
-        enlargeCenterPage: true,
-        aspectRatio: 2.0,
-        onPageChanged: (index, reason) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-    );
+    return SizedBox(
+        height: 289.h,
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return SliderComponents(movie: movie[index]);
+          },
+          itemCount: movie?.length ?? 0,
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+        ));
   }
 }

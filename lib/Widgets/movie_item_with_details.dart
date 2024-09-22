@@ -3,8 +3,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/Themes/app_colors.dart';
 import 'package:movie_app/Widgets/movie_item.dart';
+import 'package:movie_app/data/end_points.dart';
+import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
-class MovieItemWithDetails extends StatelessWidget {
+class MovieItemWithDetails extends StatefulWidget {
+  Movie movie;
+  bool isWishListed = false;
+
+  MovieItemWithDetails({required this.movie});
+
+  @override
+  State<MovieItemWithDetails> createState() => _MovieItemWithDetailsState();
+}
+
+class _MovieItemWithDetailsState extends State<MovieItemWithDetails> {
+  bool isWishListed = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -16,7 +29,48 @@ class MovieItemWithDetails extends StatelessWidget {
         width: 97.w,
         height: 200.h,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          MovieItem(),
+          Stack(
+            children: [
+              Container(
+                width: 100.87.w,
+                height: 100.74.h,
+                child: Expanded(
+                  child: Container(
+                    width: 96.87.w,
+                    height: 127.74.h,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            '${EndPoints.baseImageUrl}${widget.movie.posterPath}'),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                child: GestureDetector(
+                  child: isWishListed
+                      ? Image.asset(
+                          'assets/images/bookmarked.png',
+                          width: 27.w,
+                          height: 36.h,
+                        )
+                      : Image.asset(
+                          'assets/images/bookmark.png',
+                          width: 27.w,
+                          height: 36.h,
+                        ),
+                  onTap: () {
+                    setState(() {});
+                    isWishListed = !isWishListed;
+                    ////todo add to wish list
+                  },
+                ),
+              ),
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0, left: 8.0),
             child: Row(
@@ -28,7 +82,7 @@ class MovieItemWithDetails extends StatelessWidget {
                 ),
                 SizedBox(width: 5.w),
                 Text(
-                  '7.7',
+                  widget.movie.voteAverage.toString(),
                   style: Theme.of(context).textTheme.headlineMedium,
                 )
               ],
@@ -37,14 +91,16 @@ class MovieItemWithDetails extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              'Title',
+              widget.movie.title ?? '',
               style: Theme.of(context).textTheme.headlineMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              '2017',
+              widget.movie.releaseDate ?? '',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
