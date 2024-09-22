@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/Browse%20Tab/category_screen.dart';
 import 'package:movie_app/Themes/my_theme.dart';
 import 'package:movie_app/data/model/Response/BrowseResponse.dart';
 
@@ -14,7 +15,10 @@ class BrowseItems extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(CategoryScreen.routeName, arguments: genres);
+          },
           child: Container(
             height: 90.h,
             width: 158.w,

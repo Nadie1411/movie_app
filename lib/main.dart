@@ -11,6 +11,8 @@ import 'package:movie_app/Splash%20Screen/splash_screen.dart';
 import 'package:movie_app/Themes/my_theme.dart';
 import 'package:movie_app/WatchList%20Tab/watchList_tab.dart';
 
+import 'Browse Tab/category_screen.dart';
+
 void main() {
   runApp(MultiBlocProvider(
     providers: [
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
               SearchTab.routeName: (context) => SearchTab(),
               BrowseTab.routeName: (context) => BrowseTab(),
               WatchListTab.routeName: (context) => WatchListTab(),
-              //    CategoryScreen.routeName: (context) => CategoryScreen(),
+              CategoryScreen.routeName: (context) => CategoryScreen(),
             },
           );
         });

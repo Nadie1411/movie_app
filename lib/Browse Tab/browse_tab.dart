@@ -44,7 +44,7 @@ class _BrowseTabState extends State<BrowseTab> {
                       childAspectRatio: 10 / 5,
                     ),
                     scrollDirection: Axis.vertical,
-                    itemCount: 20,
+                    itemCount: cubit.BrowseMovies?.length ?? 0,
                     itemBuilder: (context, index) {
                       return BrowseItems(
                         genres: cubit.BrowseMovies![index],
