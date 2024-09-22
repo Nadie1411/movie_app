@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
               MovieDetailsTab.routeName: (context) => MovieDetailsTab(),
               SearchTab.routeName: (context) => SearchTab(),
               BrowseTab.routeName: (context) => BrowseTab(),
-              WatchListTab.routeName: (context) => WatchListTab()
+              WatchListTab.routeName: (context) => WatchListTab(),
+              //    CategoryScreen.routeName: (context) => CategoryScreen(),
             },
           );
         });

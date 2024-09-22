@@ -8,9 +8,14 @@ import 'package:movie_app/Themes/my_theme.dart';
 
 import '../Themes/app_colors.dart';
 
-class BrowseTab extends StatelessWidget {
+class BrowseTab extends StatefulWidget {
   static const String routeName = 'Browse_tab';
 
+  @override
+  State<BrowseTab> createState() => _BrowseTabState();
+}
+
+class _BrowseTabState extends State<BrowseTab> {
   BrowseCubit cubit = BrowseCubit();
 
   @override
@@ -41,12 +46,9 @@ class BrowseTab extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     itemCount: 20,
                     itemBuilder: (context, index) {
-                      return InkWell(
-                          onTap: () {},
-                          splashColor: AppColors.barGreyColor,
-                          child: BrowseItems(
-                            genres: cubit.BrowseMovies![index],
-                          ));
+                      return BrowseItems(
+                        genres: cubit.BrowseMovies![index],
+                      );
                     },
                   ),
                 ),

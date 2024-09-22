@@ -13,13 +13,17 @@ class BrowseItems extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Container(
-          height: 90.h,
-          width: 158.w,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(4.r),
-            child:
-                Image.asset('assets/images/browseImage.png', fit: BoxFit.fill),
+        InkWell(
+          onTap: () {},
+          child: Container(
+            height: 90.h,
+            width: 158.w,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4.r),
+              child: Image.asset(
+                  'assets/images/${getMovieAssets() ? genres.name : 'General'}.png',
+                  fit: BoxFit.fill),
+            ),
           ),
         ),
         Text(
@@ -28,5 +32,33 @@ class BrowseItems extends StatelessWidget {
         )
       ],
     );
+  }
+
+  bool getMovieAssets() {
+    bool getGenreAsset = false;
+    List movieGenreAssets = [
+      "Adventure",
+      "Animation",
+      "Comedy",
+      "Crime",
+      "Documentary",
+      "Family",
+      "Fantasy",
+      "History",
+      'Music',
+      'Romance',
+      'Science Fiction',
+      'War',
+      'Western',
+      'Horror',
+    ];
+
+    for (int i = 0; i < movieGenreAssets.length; i++) {
+      if (movieGenreAssets[i] == genres.name) {
+        getGenreAsset = true;
+        return getGenreAsset;
+      }
+    }
+    return getGenreAsset;
   }
 }

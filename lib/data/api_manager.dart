@@ -41,6 +41,27 @@ class ApiManager {
     }
   }
 
+  static Future<MovieResponse> getDiscoverMovieCategory(
+      String page, String id) async {
+    Uri url = Uri.https(baseUrl, EndPoints.getMovieCategory, {
+      "api_key": EndPoints.apiKey,
+      "language": "en-US",
+      "page": page,
+      "with_genres": id,
+      "sort_by": "popularity.desc"
+    });
+    print(url);
+    try {
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return MovieResponse.fromJson(json);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
 ////Top Rated (recommended)
   static Future<MovieResponse> getTopRatedMovies(String page) async {
     Uri url = Uri.https(baseUrl, EndPoints.getTopRated,
