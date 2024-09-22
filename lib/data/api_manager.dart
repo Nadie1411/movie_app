@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:movie_app/data/end_points.dart';
+import 'package:movie_app/data/model/Response/BrowseResponse.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
 import 'model/Response/MovieDetailResponse.dart';
@@ -50,6 +51,21 @@ class ApiManager {
       var bodyString = response.body;
       var json = jsonDecode(bodyString);
       return MovieResponse.fromJson(json);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  static Future<BrowseResponse> getBrowseMovies() async {
+    Uri url =
+        Uri.https(baseUrl, EndPoints.getBrowse, {"api_key": EndPoints.apiKey});
+    print(url);
+    try {
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return BrowseResponse.fromJson(json);
     } catch (e) {
       print(e);
       throw e;

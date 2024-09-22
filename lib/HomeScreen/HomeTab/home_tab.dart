@@ -1,19 +1,13 @@
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:movie_app/HomeScreen/HomeTab/New%20Releases/new_releases.dart';
+import 'package:movie_app/HomeScreen/HomeTab/Recommended/recommended.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
 import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/Themes/app_colors.dart';
-import 'package:movie_app/Widgets/movie_item.dart';
-
-import 'package:movie_app/HomeScreen/HomeTab/New%20Releases/new_releases.dart';
-import 'package:movie_app/HomeScreen/HomeTab/Recommended/recommended.dart';
 import 'package:movie_app/Widgets/slider_image.dart';
 
 class HomeTab extends StatefulWidget {
