@@ -1,31 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/Themes/app_colors.dart';
 
-class MovieDetailsTab extends StatelessWidget {
+class MovieDetailsTab extends StatefulWidget {
   static const String routeName = 'movie_details';
 
-  final String movieTitle = "Deadpool & Wolverine";
-  final String posterAsset = "assets/images/movieposter/wolverine.jpg";
-  final double rating = 8;
-  final String releaseDate = "2024";
-  final String duration = "2h 8m";
-  final String description =
-      "Deadpool is offered a place in the Marvel Cinematic Universe by the Time Variance Authority, but instead recruits a variant of Wolverine to save his universe from extinction.";
+  @override
+  _MovieDetailsTabState createState() => _MovieDetailsTabState();
+}
 
-  final List<String> genres = ["Dark Comedy", "Superhero", "Action"];
+class _MovieDetailsTabState extends State<MovieDetailsTab> {
+  String movieTitle = "Dora and the Lost City of Gold";
+  String posterAsset = "assets/images/Image.png";
+  double rating = 6.1;
+  String releaseDate = "2019";
+  String duration = "1h 42m";
+  String description =
+      "Teenage explorer Dora leads her friends on an adventure to save her parents and solve the mystery behind a lost city of gold.";
+
+  List<String> genres = ["Dark Comedy", "Superhero", "Action"];
+
   final List<Map<String, dynamic>> moreLikeThis = [
     {
       "title": "Avengers: Infinity War",
       "poster": "assets/images/movieposter/avengers.jpg",
-      "rating": 8.4
+      "rating": 8.4,
+      "releaseDate": "2018",
+      "duration": "2h 29m",
+      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
+    },
+    {
+      "title": "Black Panther",
+      "poster": "assets/images/movieposter/black_panther.jpg",
+      "rating": 7.3,
+      "releaseDate": "2018",
+      "duration": "2h 15m",
+      "description": "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people."
     },
     {
       "title": "Avengers: Infinity War",
       "poster": "assets/images/movieposter/avengers.jpg",
-      "rating": 8.4
+      "rating": 8.4,
+      "releaseDate": "2018",
+      "duration": "2h 29m",
+      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
     },
-
+    {
+      "title": "Avengers: Infinity War",
+      "poster": "assets/images/movieposter/avengers.jpg",
+      "rating": 8.4,
+      "releaseDate": "2018",
+      "duration": "2h 29m",
+      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
+    },
+    {
+      "title": "Avengers: Infinity War",
+      "poster": "assets/images/movieposter/avengers.jpg",
+      "rating": 8.4,
+      "releaseDate": "2018",
+      "duration": "2h 29m",
+      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
+    },
+    {
+      "title": "Avengers: Infinity War",
+      "poster": "assets/images/movieposter/avengers.jpg",
+      "rating": 8.4,
+      "releaseDate": "2018",
+      "duration": "2h 29m",
+      "description": "The Avengers must stop Thanos, who is hell-bent on collecting the Infinity Stones."
+    },
+    {
+      "title": "Deadpool & Wolverine",
+      "poster": "assets/images/movieposter/wolverine.jpg",
+      "rating": 8,
+      "releaseDate": "2024",
+      "duration": "2h 8m",
+      "description": "Deadpool is offered a place in the Marvel Cinematic Universe by the Time Variance Authority, but instead recruits a variant of Wolverine to save his universe from extinction."
+    },
+    {
+      "title": "Dora and the Lost City of Gold",
+      "poster": "assets/images/Image.png",
+      "rating": 6.1,
+      "releaseDate": "2019",
+      "duration": "1h 42m",
+      "description": "Teenage explorer Dora leads her friends on an adventure to save her parents and solve the mystery behind a lost city of gold."
+    },
   ];
+
+  void _updateMovieDetails(Map<String, dynamic> movie) {
+    setState(() {
+      movieTitle = movie["title"];
+      posterAsset = movie["poster"];
+      rating = movie["rating"];
+      releaseDate = movie["releaseDate"];
+      duration = movie["duration"];
+      description = movie["description"];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +107,11 @@ class MovieDetailsTab extends StatelessWidget {
           style: TextStyle(
             color: AppColors.whiteColor,
             fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ),
         backgroundColor: AppColors.barGreyColor,
+        iconTheme: IconThemeData(color: AppColors.primaryYellowColor),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -53,11 +124,11 @@ class MovieDetailsTab extends StatelessWidget {
                   Image.asset(
                     posterAsset,
                     width: double.maxFinite,
-                    height: 300,
+                    height: 220,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
-                        height: 300,
+                        height: 220,
                         color: Colors.grey,
                         child: Icon(
                           Icons.broken_image,
@@ -67,28 +138,29 @@ class MovieDetailsTab extends StatelessWidget {
                       );
                     },
                   ),
-                  Center(
-                    child: IconButton(
-                      onPressed: () {
-                        _showTrailerDialog(context);
-                      },
-                      icon: Icon(
-                        Icons.play_circle_outline,
-                        color: AppColors.whiteColor,
-                        size: 100,
+                  Positioned.fill(
+                    child: Center(
+                      child: IconButton(
+                        onPressed: () {
+                          _showTrailerDialog(context);
+                        },
+                        icon: Icon(
+                          Icons.play_circle_outline,
+                          color: AppColors.whiteColor,
+                          size: 80,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 8),
               Text(
                 movieTitle,
-                style: TextStyle(
-                  color: AppColors.whiteColor,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .copyWith(color: AppColors.whiteColor),
               ),
               SizedBox(height: 8),
               Row(
@@ -110,7 +182,7 @@ class MovieDetailsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 8),
               Row(
                 children: genres.map((genre) {
                   return Padding(
@@ -134,6 +206,7 @@ class MovieDetailsTab extends StatelessWidget {
               Row(
                 children: [
                   Icon(Icons.star, color: AppColors.primaryYellowColor),
+                  SizedBox(width: 5),
                   Text(
                     "$rating",
                     style: TextStyle(
@@ -163,71 +236,78 @@ class MovieDetailsTab extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8),
-              Container(
-                height: 200,
+              SizedBox(
+                height: 180,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: moreLikeThis.length,
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
+                    return GestureDetector(
+                      onTap: () {
+                        _updateMovieDetails(moreLikeThis[index]);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.asset(
+                                  moreLikeThis[index]["poster"],
+                                  width: 100,
+                                  height: 140,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      width: 100,
+                                      height: 140,
+                                      color: Colors.grey,
+                                      child: Icon(
+                                        Icons.broken_image,
+                                        color: AppColors.sectionGreyColor,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              moreLikeThis[index]["title"],
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Icon(Icons.star,
+                                    color: AppColors.primaryYellowColor,
+                                    size: 14),
+                                SizedBox(width: 5),
+                                Text(
+                                  "${moreLikeThis[index]["rating"]}",
+                                  style: TextStyle(
+                                    color: AppColors.whiteColor,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ],
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                moreLikeThis[index]["poster"],
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    width: 120,
-                                    height: 180,
-                                    color: Colors.grey,
-                                    child: Icon(
-                                      Icons.broken_image,
-                                      color: AppColors.sectionGreyColor,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            moreLikeThis[index]["title"],
-                            style: TextStyle(
-                              color: AppColors.whiteColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.star,
-                                  color: AppColors.primaryYellowColor, size: 14),
-                              Text(
-                                "${moreLikeThis[index]["rating"]}",
-                                style: TextStyle(
-                                  color: AppColors.whiteColor,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
