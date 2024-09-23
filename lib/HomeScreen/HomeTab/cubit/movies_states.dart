@@ -40,16 +40,21 @@ class TopRatedErrorState extends MoviesStates {
   TopRatedErrorState({required this.errorMessage});
 }
 
-class SimilarMovieErrorState extends MoviesStates {
-  String errorMessage;
-
-  SimilarMovieErrorState({required this.errorMessage});
-}
-
 class TopRatedSuccessState extends MoviesStates {
   MovieResponse response;
 
   TopRatedSuccessState({required this.response});
+}
+
+////////////////////////
+//more like this
+
+class SimillarLoadingState extends MoviesStates {}
+
+class SimilarMovieErrorState extends MoviesStates {
+  String errorMessage;
+
+  SimilarMovieErrorState({required this.errorMessage});
 }
 
 class SimilarMovieSuccessState extends MoviesStates {

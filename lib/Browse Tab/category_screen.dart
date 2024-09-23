@@ -37,8 +37,11 @@ class CategoryScreen extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3),
                     itemBuilder: (context, index) {
-                      return MovieItemWithDetails(
-                          movie: cubit.movieCategory![index]);
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MovieItemWithDetails(
+                            movie: cubit.movieCategory![index]),
+                      );
                     })));
       },
     );

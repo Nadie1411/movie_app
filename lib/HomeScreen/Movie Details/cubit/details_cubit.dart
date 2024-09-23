@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:movie_app/HomeScreen/HomeTab/cubit/details_states.dart';
+import 'package:movie_app/HomeScreen/Movie%20Details/cubit/details_states.dart';
 import 'package:movie_app/data/api_manager.dart';
 
 import '../../../data/model/Response/MovieDetailResponse.dart';

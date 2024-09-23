@@ -67,10 +67,10 @@ class MoviesCubit extends Cubit<MoviesStates> {
       } else {
         similarMovies = response.results ?? [];
 
-        emit(SimilarMovieSuccessState(response: response));
+        emit(PopularSuccessState(response: response));
       }
     } catch (e) {
-      emit(SimilarMovieErrorState(errorMessage: e.toString()));
+      emit(PopularErrorState(errorMessage: e.toString()));
     }
   }
 }

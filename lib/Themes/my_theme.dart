@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/Themes/app_colors.dart';
 
@@ -8,27 +9,37 @@ class MyTheme {
     headlineLarge: GoogleFonts.inter(
       color: AppColors.whiteColor,
       fontWeight: FontWeight.w400,
-      fontSize: 18,
+      fontSize: 18.spMin,
     ),
     headlineMedium: GoogleFonts.inter(
       color: AppColors.whiteColor,
       fontWeight: FontWeight.w400,
-      fontSize: 15,
+      fontSize: 15.spMin,
     ),
     headlineSmall: GoogleFonts.inter(
       color: AppColors.whiteColor,
       fontWeight: FontWeight.w400,
-      fontSize: 10,
+      fontSize: 10.sp,
+    ),
+    bodyLarge: GoogleFonts.inter(
+      color: AppColors.whiteColor,
+      fontWeight: FontWeight.w400,
+      fontSize: 24.spMax,
     ),
     bodyMedium: GoogleFonts.inter(
       color: AppColors.whiteColor,
       fontWeight: FontWeight.w400,
-      fontSize: 15,
+      fontSize: 15.sp,
     ),
     bodySmall: GoogleFonts.inter(
       color: AppColors.whiteColor,
       fontWeight: FontWeight.w400,
-      fontSize: 8,
+      fontSize: 8.sp,
+    ),
+    displayLarge: GoogleFonts.inter(
+      color: AppColors.whiteColor,
+      fontWeight: FontWeight.w400,
+      fontSize: 20.sp,
     ),
   ));
 }
