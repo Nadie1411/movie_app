@@ -33,9 +33,10 @@ class CategoryScreen extends StatelessWidget {
             backgroundColor: AppColors.backgroundColor,
             body: Expanded(
                 child: GridView.builder(
+                    shrinkWrap: true,
                     itemCount: cubit.movieCategory?.length ?? 0,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3),
+                        childAspectRatio: 2 / 3, crossAxisCount: 3),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),

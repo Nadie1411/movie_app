@@ -49,7 +49,7 @@ class TopRatedSuccessState extends MoviesStates {
 ////////////////////////
 //more like this
 
-class SimillarLoadingState extends MoviesStates {}
+class SimilarLoadingState extends MoviesStates {}
 
 class SimilarMovieErrorState extends MoviesStates {
   String errorMessage;
@@ -61,4 +61,19 @@ class SimilarMovieSuccessState extends MoviesStates {
   MovieResponse response;
 
   SimilarMovieSuccessState({required this.response});
+}
+///////////////////////
+//Search
+class SearchMovieLoadingState extends MoviesStates {}
+
+class SearchMovieErrorState extends MoviesStates {
+  String errorMessage;
+
+  SearchMovieErrorState({required this.errorMessage});
+}
+
+class SearchMovieSuccessState extends MoviesStates {
+  MovieResponse response;
+
+  SearchMovieSuccessState({required this.response});
 }

@@ -56,6 +56,23 @@ class MoviesCubit extends Cubit<MoviesStates> {
     }
   }
 
+  List<Movie>? searchMovie;
+
+  void getSearchMovie(String query) async {
+    try {
+      var response = await ApiManager.getSearchMovie(query);
+      if (response.success == 'false') {
+        emit(TopRatedErrorState(errorMessage: response.statusMessage!));
+      } else {
+        searchMovie = response.results ?? [];
+
+        emit(PopularSuccessState(response: response));
+      }
+    } catch (e) {
+      emit(PopularErrorState(errorMessage: e.toString()));
+    }
+  }
+
   List<Movie>? similarMovies;
 
   void getSimilar(int id) async {

@@ -21,8 +21,8 @@ class _MovieItemWithDetailsState extends State<MovieItemWithDetails> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, MovieDetailsTab.routeName,
-            arguments: widget.movie);
+        Navigator.of(context)
+            .pushNamed(MovieDetailsTab.routeName, arguments: widget.movie);
       },
       child: Container(
         color: AppColors.movieGreyColor,
