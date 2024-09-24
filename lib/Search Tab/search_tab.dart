@@ -16,7 +16,7 @@ class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesCubit, MoviesStates>(
-      bloc: cubit..getSearchMovie(searchController.text),
+      bloc: cubit,
       builder: (context, state) {
         return Scaffold(
             backgroundColor: AppColors.backgroundColor,
@@ -45,27 +45,35 @@ class SearchTab extends StatelessWidget {
                   ),
                   cursorColor: AppColors.primaryYellowColor,
                   style: MyTheme.theme.textTheme.bodySmall,
-                  controller: searchController,
                   onChanged: (query) {
                     searchController.text = query;
+                    if (query.isNotEmpty) {
+                      cubit.getSearchMovie(searchController.text);
+                    } else {
+                      cubit.clearSearchResults();
+                    }
                   },
                 ),
               ),
               Expanded(
-                child: state is SearchMovieSuccessState
-                    ? ListView.builder(
-                        itemCount: 7,
-                        shrinkWrap: true,
+                  child: state is SearchMovieSuccessState
+                      ? GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          itemCount: cubit.searchMovie?.length ?? 0,
+                          shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return MovieItemWithDetails(
                               movie: cubit.searchMovie![index]);
                         })
-                    : Center(
-                        child: CircularProgressIndicator(
-                        color: AppColors.primaryYellowColor,
-                      )),
-              )
+                      : Center(
+                          child: (searchController.text.isEmpty)
+                              ? Text("Search for movies",
+                                  style: MyTheme.theme.textTheme.headlineLarge)
+                              : CircularProgressIndicator(
+                                  color: AppColors.primaryYellowColor)))
             ]));
       },
     );

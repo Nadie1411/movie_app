@@ -62,15 +62,20 @@ class MoviesCubit extends Cubit<MoviesStates> {
     try {
       var response = await ApiManager.getSearchMovie(query);
       if (response.success == 'false') {
-        emit(TopRatedErrorState(errorMessage: response.statusMessage!));
+        emit(SearchMovieErrorState(errorMessage: response.statusMessage!));
       } else {
         searchMovie = response.results ?? [];
 
-        emit(PopularSuccessState(response: response));
+        emit(SearchMovieSuccessState(response: response));
       }
     } catch (e) {
-      emit(PopularErrorState(errorMessage: e.toString()));
+      emit(SearchMovieErrorState(errorMessage: e.toString()));
     }
+  }
+
+  void clearSearchResults() {
+    searchMovie = [];
+    emit(MoviesInitialState());
   }
 
   List<Movie>? similarMovies;
@@ -84,10 +89,10 @@ class MoviesCubit extends Cubit<MoviesStates> {
       } else {
         similarMovies = response.results ?? [];
 
-        emit(PopularSuccessState(response: response));
+        emit(SimilarMovieSuccessState(response: response));
       }
     } catch (e) {
-      emit(PopularErrorState(errorMessage: e.toString()));
+      emit(SimilarMovieErrorState(errorMessage: e.toString()));
     }
   }
 }
