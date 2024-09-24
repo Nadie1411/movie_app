@@ -78,4 +78,5 @@ class SearchTab extends StatelessWidget {
       },
     );
   }
+
 }

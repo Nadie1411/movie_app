@@ -21,6 +21,7 @@ class _HomeTabState extends State<HomeTab> {
   MoviesCubit cubit = MoviesCubit();
   int _currentIndex = 0;
 
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesCubit, MoviesStates>(

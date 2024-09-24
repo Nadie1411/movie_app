@@ -75,7 +75,7 @@ class MoviesCubit extends Cubit<MoviesStates> {
 
   void clearSearchResults() {
     searchMovie = [];
-    emit(MoviesInitialState());
+
   }
 
   List<Movie>? similarMovies;
