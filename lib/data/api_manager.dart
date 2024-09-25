@@ -94,7 +94,7 @@ class ApiManager {
   }
 
   static Future<MovieResponse> getSimilarMovies(int id, String page) async {
-    Uri url = Uri.https(baseUrl, EndPoints.getDetails(id),
+    Uri url = Uri.https(baseUrl, EndPoints.getSimilar(id),
         {"api_key": EndPoints.apiKey, "language": "en-US", "page": page});
     print(url);
     try {

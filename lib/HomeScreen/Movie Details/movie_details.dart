@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
-import 'package:movie_app/HomeScreen/Movie%20Details/similar_items.dart';
+import 'package:movie_app/HomeScreen/Movie%20Details/cubit/Similar.dart';
 import 'package:movie_app/Themes/app_colors.dart';
 import 'package:movie_app/data/end_points.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
@@ -21,7 +22,14 @@ class MovieDetailsTab extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColors.backgroundColor,
           appBar: AppBar(
-            title: Text(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(Icons.arrow_back_outlined),
+                color: AppColors.primaryYellowColor,
+              ),
+              title: Text(
               args.title ?? '',
               style: TextStyle(
                 color: AppColors.whiteColor,
@@ -40,8 +48,8 @@ class MovieDetailsTab extends StatelessWidget {
                   Stack(
                     children: [
                       Image.network(
-                        '${EndPoints.baseImageUrl}${args.posterPath}',
-                        width: double.maxFinite,
+                          '${EndPoints.baseImageUrl}${args.backdropPath}',
+                          width: double.maxFinite,
                         height: 300,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
@@ -57,7 +65,8 @@ class MovieDetailsTab extends StatelessWidget {
                         },
                       ),
                       Center(
-                        child: IconButton(
+                          heightFactor: 2.5,
+                          child: IconButton(
                           onPressed: () {
                             _showTrailerDialog(context);
                           },
@@ -99,92 +108,67 @@ class MovieDetailsTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Icon(Icons.star, color: AppColors.primaryYellowColor),
-                      Text(
-                        args.voteAverage.toString(),
-                        style: TextStyle(
-                          color: AppColors.whiteColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 129.w,
+                          height: 199.h,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4.r),
+                            child: Image.network(
+                                '${EndPoints.baseImageUrl}${args.posterPath}'),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    args.overview ?? ' ',
-                    style: TextStyle(
-                      color: AppColors.whiteColor,
-                      fontSize: 16,
-                      height: 1.5,
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    "More Like This",
-                    style: TextStyle(
-                      color: AppColors.whiteColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  // Ensure the Container is now wrapped properly in a Column
-                  Container(
-                    height: 200,
-                    child: state is SimilarMovieSuccessState
-                        ? ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: state.response.results?.length ?? 0,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SimilarItems(
-                                        movie: cubit.similarMovies![index]),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      args.title ?? '',
-                                      style: TextStyle(
-                                        color: AppColors.whiteColor,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.star,
-                                            color: AppColors.primaryYellowColor,
-                                            size: 14),
-                                        Text(
-                                          args.voteAverage.toString(),
-                                          style: TextStyle(
-                                            color: AppColors.whiteColor,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                        Expanded(
+                            child: Column(
+                          children: [
+                            Text(
+                              args.overview ?? ' ',
+                              overflow: TextOverflow.visible,
+                              maxLines: null,
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                                fontSize: 16,
+                                height: 1.5,
+                              ),
+                            ),
+                            SizedBox(height: 70.h),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: AppColors.primaryYellowColor,
+                                  size: 20,
                                 ),
-                              );
-                            },
+                                Text(
+                                  args.voteAverage.toString(),
+                                  style: TextStyle(
+                                    color: AppColors.whiteColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                      ],
+                    ),
+                  SizedBox(height: 12),
+                    SizedBox(height: 8),
+                    state is SimilarMovieSuccessState
+                        ? Similar(
+                            cubit: cubit,
                           )
                         : Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryYellowColor,
-                            ),
-                          ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+                            child: CircularProgressIndicator(),
+                          )
+                  ]),
+            )));
       },
     );
   }

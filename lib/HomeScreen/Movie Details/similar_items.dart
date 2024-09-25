@@ -11,10 +11,10 @@ class SimilarItems extends StatefulWidget {
   SimilarItems({required this.movie});
 
   @override
-  State<SimilarItems> createState() => _MovieItemWithDetailsState();
+  State<SimilarItems> createState() => _SimilarItemsState();
 }
 
-class _MovieItemWithDetailsState extends State<SimilarItems> {
+class _SimilarItemsState extends State<SimilarItems> {
   bool isWishListed = false;
   @override
   Widget build(BuildContext context) {

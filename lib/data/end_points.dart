@@ -13,6 +13,6 @@ class EndPoints {
   }
 
   static String getSimilar(int movieId) {
-    return '/3/movie/${movieId}/similar';
+    return '/3/movie/$movieId/similar';
   }
 }
