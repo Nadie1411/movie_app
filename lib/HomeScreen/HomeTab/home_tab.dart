@@ -2,13 +2,14 @@ import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movie_app/HomeScreen/HomeTab/New%20Releases/new_releases.dart';
-import 'package:movie_app/HomeScreen/HomeTab/Recommended/recommended.dart';
-import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
-import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
-import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
-import 'package:movie_app/Themes/app_colors.dart';
-import 'package:movie_app/Widgets/slider_image.dart';
+
+import '../../Themes/app_colors.dart';
+import '../Movie Details/movie_details.dart';
+import 'New Releases/new_releases.dart';
+import 'Popular/Slider/slider_components.dart';
+import 'Recommended/recommended.dart';
+import 'cubit/movies_cubit.dart';
+import 'cubit/movies_states.dart';
 
 class HomeTab extends StatefulWidget {
   static const String routeName = 'home_tab';
@@ -44,16 +45,15 @@ class _HomeTabState extends State<HomeTab> {
                                   Navigator.pushNamed(
                                       context, MovieDetailsTab.routeName);
                                 },
-                                child: SliderImage(
+                                child: SliderComponents(
                                   movie: cubit.popularMovies![index],
                                 ),
                               );
                             },
                             options: CarouselOptions(
-                              height: 200.h,
                               autoPlay: true,
+                              height: 350.h,
                               enlargeCenterPage: true,
-                              aspectRatio: 2.0,
                               onPageChanged: (index, reason) {
                                 setState(() {
                                   _currentIndex = index;
@@ -61,7 +61,7 @@ class _HomeTabState extends State<HomeTab> {
                               },
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          // SizedBox(height: 10.h),
                           NewReleases(cubit: cubit),
                           SizedBox(height: 20.h),
                           Recommended(

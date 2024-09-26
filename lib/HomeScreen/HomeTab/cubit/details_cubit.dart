@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:movie_app/HomeScreen/HomeTab/cubit/details_states.dart';
+import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
 import 'package:movie_app/data/api_manager.dart';
 
 import '../../../data/model/Response/MovieDetailResponse.dart';
 
-class MovieDetails extends Cubit<MovieDetailState> {
-  MovieDetails() : super(MovieDetailsInitialState());
+class MovieDetails extends Cubit<MoviesStates> {
+  MovieDetails() : super(MoviesInitialState());
 
-  List<Genres>? detail;
+  List<Genres> ?detail ;
 
-  void getUpComing(int id) async {
+  void getGenre(int id) async {
     try {
       var response = await ApiManager.getMovieDetails(id);
       if (response.success == 'false') {
@@ -22,4 +22,5 @@ class MovieDetails extends Cubit<MovieDetailState> {
       emit(MovieDetailsErrorState(error: e.toString()));
     }
   }
+
 }

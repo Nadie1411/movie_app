@@ -6,12 +6,12 @@ class BrowseResponse {
     if (json['genres'] != null) {
       genres = [];
       json['genres'].forEach((v) {
-        genres?.add(Genres.fromJson(v));
+        genres?.add(Category.fromJson(v));
       });
     }
   }
 
-  List<Genres>? genres;
+  List<Category>? genres;
   int? statusCode;
   String? statusMessage;
   String? success;
@@ -25,13 +25,13 @@ class BrowseResponse {
   }
 }
 
-class Genres {
-  Genres({
+class Category {
+  Category({
     this.id,
     this.name,
   });
 
-  Genres.fromJson(dynamic json) {
+  Category.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
   }

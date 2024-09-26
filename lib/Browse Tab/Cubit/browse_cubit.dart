@@ -6,7 +6,7 @@ import '../../data/api_manager.dart';
 
 class BrowseCubit extends Cubit<BrowseStates> {
   BrowseCubit() : super(BrowseInitialState());
-  List<Genres>? BrowseMovies;
+  List<Category>? BrowseMovies;
 
   void getBrowse() async {
     print("Fetching Genres Movies");

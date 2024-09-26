@@ -5,7 +5,7 @@ import 'package:movie_app/Themes/my_theme.dart';
 import 'package:movie_app/data/model/Response/BrowseResponse.dart';
 
 class BrowseItems extends StatelessWidget {
-  Genres genres;
+  Category genres;
 
   BrowseItems({required this.genres});
 

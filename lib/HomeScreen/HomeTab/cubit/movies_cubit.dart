@@ -1,12 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
 import 'package:movie_app/data/api_manager.dart';
+import 'package:movie_app/data/model/Response/MovieDetailResponse.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
 class MoviesCubit extends Cubit<MoviesStates> {
   MoviesCubit() : super(MoviesInitialState());
+
   //hold data , handle logic
   List<Movie>? popularMovies;
+
   void getPopularMovies() async {
     try {
       var response = await ApiManager.getPopularMovies('3');
@@ -23,6 +26,7 @@ class MoviesCubit extends Cubit<MoviesStates> {
 
   //newreleases
   List<Movie>? upComingMovies;
+
   void getUpComing() async {
     try {
       var response = await ApiManager.getUpComingMovies('1');
@@ -39,6 +43,7 @@ class MoviesCubit extends Cubit<MoviesStates> {
 
   //Recommended
   List<Movie>? topRatedMovies;
+
   void getTopRated() async {
     print("Fetching Top Rated Movies");
     try {
@@ -63,14 +68,55 @@ class MoviesCubit extends Cubit<MoviesStates> {
     try {
       var response = await ApiManager.getSimilarMovies(id, '1');
       if (response.success == 'false') {
-        emit(SimilarMovieErrorState(errorMessage: response.statusMessage!));
+        emit(SimilarMovieErrorState(error: response.statusMessage!));
       } else {
         similarMovies = response.results ?? [];
-
-        emit(SimilarMovieSuccessState(response: response));
+        if (similarMovies != null) {
+          emit(SimilarMovieSuccessState(response: response));
+        }
       }
     } catch (e) {
-      emit(SimilarMovieErrorState(errorMessage: e.toString()));
+      emit(SimilarMovieErrorState(error: e.toString()));
+    }
+  }
+
+//search
+  List<Movie>? searchMovie;
+
+  void getSearchMovie(String query) async {
+    try {
+      var response = await ApiManager.getSearchMovie(query);
+      if (response.success == 'false') {
+        emit(SearchMovieErrorState(errorMessage: response.statusMessage!));
+      } else {
+        searchMovie = response.results ?? [];
+
+        emit(SearchMovieSuccessState(response: response));
+      }
+    } catch (e) {
+      emit(SearchMovieErrorState(errorMessage: e.toString()));
+    }
+  }
+
+  void clearSearchResults() {
+    searchMovie = [];
+  }
+
+  List<Genres>? detail;
+
+  void getGenre(int id) async {
+    try {
+      var response = await ApiManager.getMovieDetails(id);
+      if (response.success == 'false') {
+        emit(MovieDetailsErrorState(error: response.statusMessage!));
+      } else {
+        detail = response.genres;
+        if (detail != null) {
+          emit(MovieDetailsSuccessState(response: response));
+        }
+      }
+    } catch (e) {
+      emit(MovieDetailsErrorState(error: e.toString()));
     }
   }
 }

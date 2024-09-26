@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
-import 'package:movie_app/data/end_points.dart';
-import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
-import '../WatchList Tab/firestore/firebase_utils.dart';
-import '../WatchList Tab/watchlist.dart';
-import 'movies.dart';
+import '../../../../WatchList Tab/firestore/firebase_utils.dart';
+import '../../../../WatchList Tab/watchlist.dart';
+import '../../../../Widgets/movies.dart';
+import '../../../../data/end_points.dart';
+import '../../../../data/model/Response/MovieResponse.dart';
 
-class MovieItem extends StatefulWidget {
-  bool isWishListed = false;
+class SliderImage extends StatefulWidget {
   Movie movie;
+  bool isWishListed = false;
   final Movies movies;
 
-  MovieItem({
-    required this.movie,
-
+  SliderImage({required this.movie,
     Movies? movies,
   }) : movies = movies ?? Movies(
-    title: movie.title ?? '',
-    overview: movie.overview ?? '',
-    posterPath: movie.posterPath ?? '',
-    releaseDate: movie.releaseDate ?? '',
-    voteAverage: movie.voteAverage ?? 0.0,);
-
+      title: movie.title ?? '',
+      overview: movie.overview ?? '',
+      posterPath: movie.posterPath ?? '',
+      releaseDate: movie.releaseDate ?? '',
+      voteAverage: movie.voteAverage ?? 0.0,);
 
   @override
-  State<MovieItem> createState() => _MovieItemState();
+  State<SliderImage> createState() => _SliderImageState();
 }
 
-class _MovieItemState extends State<MovieItem> {
+class _SliderImageState extends State<SliderImage> {
   bool isWishListed = false;
+
 
   @override
   void initState() {
@@ -50,26 +47,21 @@ class _MovieItemState extends State<MovieItem> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        InkWell(
-          onTap: () {
-            Navigator.of(context)
-                .pushNamed(MovieDetailsTab.routeName, arguments: widget.movie);
-          },
-          child: Container(
-            width: 96.87.w,
-            height: 127.74.h,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                    '${EndPoints.baseImageUrl}${widget.movie.posterPath}'),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.circular(4.r),
+        Container(
+          width: 129.w,
+          height: 199.h,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(
+                  '${EndPoints.baseImageUrl}${widget.movie.posterPath}'),
+              fit: BoxFit.cover,
             ),
+            borderRadius: BorderRadius.circular(4.r),
           ),
         ),
         Positioned(
@@ -125,8 +117,8 @@ class _MovieItemState extends State<MovieItem> {
 
             },
           ),
-        ),
-      ],
-    );
-  }
+),
+],
+);
+}
 }
