@@ -13,7 +13,7 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var genre = ModalRoute.of(context)?.settings.arguments as Genres;
+    var genre = ModalRoute.of(context)?.settings.arguments as Category;
 
     return BlocBuilder<DiscoverMovieCategory, DiscoverMovieStates>(
       bloc: cubit..getMovieCategory(genre.id.toString()),

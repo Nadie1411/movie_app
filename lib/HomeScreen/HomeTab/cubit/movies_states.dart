@@ -1,5 +1,7 @@
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
+import '../../../data/model/Response/MovieDetailResponse.dart';
+
 abstract class MoviesStates {}
 
 class MoviesInitialState extends MoviesStates {}
@@ -63,6 +65,8 @@ class SimilarMovieErrorState extends MoviesStates {
   SimilarMovieErrorState({required this.error});
 }
 
+class SimilarMovieLoadingState extends MoviesStates {}
+
 //search
 class SearchMovieLoadingState extends MoviesStates {}
 
@@ -76,4 +80,18 @@ class SearchMovieSuccessState extends MoviesStates {
   MovieResponse response;
 
   SearchMovieSuccessState({required this.response});
+}
+//details
+class MovieDetailsLoadingState extends MoviesStates {}
+
+class MovieDetailsErrorState extends MoviesStates {
+  String error;
+
+  MovieDetailsErrorState({required this.error});
+}
+
+class MovieDetailsSuccessState extends MoviesStates {
+  MovieDetailResponse response;
+
+  MovieDetailsSuccessState({required this.response});
 }

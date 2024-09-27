@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
 import 'package:movie_app/Themes/app_colors.dart';
+import 'package:movie_app/Themes/my_theme.dart';
 import 'package:movie_app/data/end_points.dart';
 import 'package:movie_app/data/model/Response/MovieDetailResponse.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
@@ -17,9 +18,11 @@ class MovieDetailsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments! as Movie;
     MoviesCubit cubit = MoviesCubit();
-    Genres genres;
+
     return BlocBuilder<MoviesCubit, MoviesStates>(
-      bloc: cubit..getSimilar(args.id ?? 0),
+      bloc: cubit
+        ..getSimilar(args.id ?? 0)
+        ..getGenre(args.id ?? 0),
       builder: (context, state) {
         return Scaffold(
             backgroundColor: AppColors.backgroundColor,
@@ -126,9 +129,25 @@ class MovieDetailsTab extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                            child: Column(
-                          children: [
-                            Text(
+                            child: state is MovieDetailsLoadingState
+                                ? Center(child: CircularProgressIndicator())
+                                : Column(
+                                    children: [
+                                      ListView.builder(
+                                          itemCount: cubit.detail?.length ?? 0,
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Genre_items(
+                                                  genres: cubit.detail![index]),
+                                            );
+                                          }),
+                                      SizedBox(
+                                        height: 12.h,
+                                      ),
+                                      Text(
                               args.overview ?? ' ',
                               overflow: TextOverflow.visible,
                               maxLines: null,
@@ -138,8 +157,8 @@ class MovieDetailsTab extends StatelessWidget {
                                 height: 1.5,
                               ),
                             ),
-                            SizedBox(height: 70.h),
-                            Row(
+                                      SizedBox(height: 20.h),
+                                      Row(
                               children: [
                                 Icon(
                                   Icons.star,
@@ -157,17 +176,17 @@ class MovieDetailsTab extends StatelessWidget {
                               ],
                             ),
                           ],
-                        )),
+                                  ))
                       ],
                     ),
                     SizedBox(height: 12),
                     SizedBox(height: 8),
-                    state is SimilarMovieSuccessState
-                        ? Similar(
-                            cubit: cubit,
-                          )
-                        : Center(
+                    state is SimilarMovieLoadingState
+                        ? Center(
                             child: CircularProgressIndicator(),
+                          )
+                        : Similar(
+                            cubit: cubit,
                           )
                   ]),
             )));
@@ -233,6 +252,31 @@ class MovieDetailsTab extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class Genre_items extends StatelessWidget {
+  const Genre_items({
+    super.key,
+    required this.genres,
+  });
+
+  final Genres? genres;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 25.h,
+      alignment: Alignment.center,
+      width: 10.w,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.r),
+          border: Border.all(color: AppColors.sectionGreyColor, width: 3)),
+      child: Text(
+        genres?.name ?? '',
+        style: MyTheme.theme.textTheme.bodyMedium,
+      ),
     );
   }
 }

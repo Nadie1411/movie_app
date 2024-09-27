@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
 import 'package:movie_app/data/api_manager.dart';
+import 'package:movie_app/data/model/Response/MovieDetailResponse.dart';
 import 'package:movie_app/data/model/Response/MovieResponse.dart';
 
 class MoviesCubit extends Cubit<MoviesStates> {
@@ -70,8 +71,9 @@ class MoviesCubit extends Cubit<MoviesStates> {
         emit(SimilarMovieErrorState(error: response.statusMessage!));
       } else {
         similarMovies = response.results ?? [];
-
-        emit(SimilarMovieSuccessState(response: response));
+        if (similarMovies != null) {
+          emit(SimilarMovieSuccessState(response: response));
+        }
       }
     } catch (e) {
       emit(SimilarMovieErrorState(error: e.toString()));
@@ -98,5 +100,23 @@ class MoviesCubit extends Cubit<MoviesStates> {
 
   void clearSearchResults() {
     searchMovie = [];
+  }
+
+  List<Genres>? detail;
+
+  void getGenre(int id) async {
+    try {
+      var response = await ApiManager.getMovieDetails(id);
+      if (response.success == 'false') {
+        emit(MovieDetailsErrorState(error: response.statusMessage!));
+      } else {
+        detail = response.genres;
+        if (detail != null) {
+          emit(MovieDetailsSuccessState(response: response));
+        }
+      }
+    } catch (e) {
+      emit(MovieDetailsErrorState(error: e.toString()));
+    }
   }
 }
