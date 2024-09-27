@@ -5,14 +5,19 @@ import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/Themes/app_colors.dart';
 import 'package:movie_app/Widgets/movie_item.dart';
 
-class NewReleases extends StatelessWidget {
-  const NewReleases({
+class NewReleases extends StatefulWidget {
+  NewReleases({
     super.key,
     required this.cubit,
   });
 
   final MoviesCubit cubit;
 
+  @override
+  State<NewReleases> createState() => _NewReleasesState();
+}
+
+class _NewReleasesState extends State<NewReleases> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +41,7 @@ class NewReleases extends StatelessWidget {
               child: ListView.builder(
                 physics: const ScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: cubit.upComingMovies?.length ?? 0,
+                itemCount: widget.cubit.upComingMovies?.length ?? 0,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -48,7 +53,7 @@ class NewReleases extends StatelessWidget {
                           );
                         },
                         child: MovieItem(
-                          movie: cubit.upComingMovies![index],
+                          movie: widget.cubit.upComingMovies![index],
                         )),
                   );
                 },

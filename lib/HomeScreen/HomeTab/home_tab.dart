@@ -1,6 +1,7 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gallery_3d/gallery3d.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/HomeScreen/HomeTab/New%20Releases/new_releases.dart';
 import 'package:movie_app/HomeScreen/HomeTab/Recommended/recommended.dart';
@@ -21,7 +22,6 @@ class _HomeTabState extends State<HomeTab> {
   MoviesCubit cubit = MoviesCubit();
   int _currentIndex = 0;
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesCubit, MoviesStates>(
@@ -37,29 +37,31 @@ class _HomeTabState extends State<HomeTab> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Gallery3D(
-                              itemConfig: GalleryItemConfig(
-                                  width: 129.w, height: 199.h),
-                              controller: Gallery3DController(
-                                  itemCount:
-                                      state.response.results?.length ?? 0,
-                                  autoLoop: true,
-                                  scrollTime: 5),
-                              width: MediaQuery.of(context).size.width,
-                              onItemChanged: (index) {
-                                _currentIndex = index;
+                          CarouselSlider.builder(
+                            itemCount: state.response.results?.length ?? 0,
+                            itemBuilder: (context, index, realIdx) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, MovieDetailsTab.routeName);
+                                },
+                                child: SliderImage(
+                                  movie: cubit.popularMovies![index],
+                                ),
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: 200.h,
+                              autoPlay: true,
+                              enlargeCenterPage: true,
+                              aspectRatio: 2.0,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _currentIndex = index;
+                                });
                               },
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, MovieDetailsTab.routeName);
-                                  },
-                                  child: SliderImage(
-                                    movie: cubit.popularMovies![index],
-                                  ),
-                                );
-                              }),
+                            ),
+                          ),
                           SizedBox(height: 20.h),
                           NewReleases(cubit: cubit),
                           SizedBox(height: 20.h),

@@ -21,15 +21,14 @@ class _MovieItemWithDetailsState extends State<MovieItemWithDetails> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(MovieDetailsTab.routeName, arguments: widget.movie);
+        Navigator.pushNamed(context, MovieDetailsTab.routeName,
+            arguments: widget.movie);
       },
       child: Container(
         color: AppColors.movieGreyColor,
         width: 97.w,
         height: 200.h,
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Stack(
             children: [
               Container(
@@ -41,11 +40,10 @@ class _MovieItemWithDetailsState extends State<MovieItemWithDetails> {
                     height: 127.74.h,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(
-                            '${EndPoints.baseImageUrl}${widget.movie.posterPath}',
-                          ),
-                          fit: BoxFit.fill,
-                          alignment: Alignment.center),
+                        image: NetworkImage(
+                            '${EndPoints.baseImageUrl}${widget.movie.posterPath}'),
+                        fit: BoxFit.cover,
+                      ),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                   ),
