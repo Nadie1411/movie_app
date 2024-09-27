@@ -9,7 +9,6 @@ import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
 import 'package:movie_app/HomeScreen/Movie%20Details/movie_details.dart';
 import 'package:movie_app/Themes/app_colors.dart';
-import 'package:movie_app/HomeScreen/HomeTab/Popular/Slider/slider_image.dart';
 
 class HomeTab extends StatefulWidget {
   static const String routeName = 'home_tab';
