@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/Browse%20Tab/Cubit/discover_movies_states.dart';
+import 'package:movie_app/Browse%20Tab/category_item.dart';
 import 'package:movie_app/Themes/app_colors.dart';
-import 'package:movie_app/Widgets/movie_item_with_details.dart';
 import 'package:movie_app/data/model/Response/BrowseResponse.dart';
 
 import 'Cubit/discover_movies_cubit.dart';
@@ -40,8 +40,7 @@ class CategoryScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MovieItemWithDetails(
-                            movie: cubit.movieCategory![index]),
+                        child: CategoryItem(movie: cubit.movieCategory![index]),
                       );
                     })));
       },

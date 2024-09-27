@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/Browse%20Tab/category_item.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_cubit.dart';
 import 'package:movie_app/HomeScreen/HomeTab/cubit/movies_states.dart';
 import 'package:movie_app/Themes/my_theme.dart';
-import 'package:movie_app/Widgets/movie_item_with_details.dart';
 
 import '../Themes/app_colors.dart';
 
@@ -60,14 +60,17 @@ class SearchTab extends StatelessWidget {
                       ? GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3),
+                                  crossAxisCount: 3, childAspectRatio: 3.5 / 5),
                           itemCount: cubit.searchMovie?.length ?? 0,
                           shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
+                          scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
-                          return MovieItemWithDetails(
-                              movie: cubit.searchMovie![index]);
-                        })
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CategoryItem(
+                                  movie: cubit.searchMovie![index]),
+                            );
+                          })
                       : Center(
                           child: (searchController.text.isEmpty)
                               ? Text("Search for movies",
