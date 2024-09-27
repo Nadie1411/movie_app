@@ -16,7 +16,7 @@ class NewReleases extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 455.62.w,
+      width: 420.w,
       height: 200.h,
       color: AppColors.movieGreyColor,
       child: Column(

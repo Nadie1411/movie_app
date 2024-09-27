@@ -20,8 +20,8 @@ class _SliderImageState extends State<SliderImage> {
     return Stack(
       children: [
         Container(
-          width: 155.w,
-          height: 225.h,
+          width: 129.w,
+          height: 199.h,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
@@ -47,7 +47,7 @@ class _SliderImageState extends State<SliderImage> {
             onTap: () {
               setState(() {});
               isWishlisted = !isWishlisted;
-              ////todo add to wish list
+              ////todo add to wish list//////
             },
           ),
         ),

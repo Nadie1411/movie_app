@@ -13,12 +13,12 @@ class MyTheme {
     ),
     headlineMedium: GoogleFonts.inter(
       color: AppColors.whiteColor,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontSize: 15.spMin,
     ),
     headlineSmall: GoogleFonts.inter(
       color: AppColors.whiteColor,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontSize: 10.sp,
     ),
     bodyLarge: GoogleFonts.inter(
@@ -28,7 +28,7 @@ class MyTheme {
     ),
     bodyMedium: GoogleFonts.inter(
       color: AppColors.whiteColor,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontSize: 15.sp,
     ),
     bodySmall: GoogleFonts.inter(

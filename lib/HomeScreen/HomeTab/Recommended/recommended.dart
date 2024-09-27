@@ -16,7 +16,7 @@ class Recommended extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 565.w,
-      height: 260.h,
+      height: 290.h,
       color: AppColors.sectionGreyColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class Recommended extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: 186.h,
+              height: 215.h,
               child: ListView.builder(
                 physics: const ScrollPhysics(),
                 scrollDirection: Axis.horizontal,

@@ -6,7 +6,9 @@ import 'package:movie_app/data/model/Response/MovieResponse.dart';
 class MovieItem extends StatefulWidget {
   bool isWishListed = false;
   Movie movie;
-  MovieItem({required this.movie});
+  MovieItem({
+    required this.movie,
+  });
 
   @override
   State<MovieItem> createState() => _MovieItemState();
@@ -47,10 +49,14 @@ class _MovieItemState extends State<MovieItem> {
             onTap: () {
               setState(() {});
               isWishlisted = !isWishlisted;
-              ////todo add to wish list
+              ////todo add to wish list/////
             },
           ),
         ),
+        Text(
+          widget.movie.title ?? '',
+          style: TextStyle(color: Colors.transparent, fontSize: 0),
+        )
       ],
     );
   }
