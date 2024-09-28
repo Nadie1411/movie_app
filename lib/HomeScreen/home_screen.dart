@@ -3,7 +3,6 @@ import 'package:movie_app/Browse%20Tab/browse_tab.dart';
 import 'package:movie_app/HomeScreen/HomeTab/home_tab.dart';
 import 'package:movie_app/Search%20Tab/search_tab.dart';
 import 'package:movie_app/Themes/app_colors.dart';
-import 'package:movie_app/Themes/my_theme.dart';
 import 'package:movie_app/WatchList%20Tab/watchList_tab.dart';
 
 class HomeScreen extends StatefulWidget {
